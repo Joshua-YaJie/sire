@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.manageMappper.IpInfoMapper">
+
+    <resultMap type="com.example.demo.domain.IpInfo" id="ipInfo">
+    </resultMap>
+
+    <select id="selectIpByCondition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM `T_Ip_Info` where 1=1
+        <if test="id!=null"> and id=#{id} </if>
+        <if test="os!=null and os!=''"> and os=#{os} </if>
+        <if test="ip!=null and ip!=''"> and ip=#{ip} </if>
+        <if test="businessName!=null and businessName!=''"> and businessName=#{businessName} </if>
+        <if test="ipBusClassfy!=null and ipBusClassfy!=''"> and ipBusClassfy=#{ipBusClassfy} </if>
+        <if test="description!=null and description!=''"> and description=#{description} </if>
+        <if test="skip!=null and max!=null">limit #{skip}, #{max}</if>
+    </select>
+
+    <select id="selectIpCountsByCondition" parameterType="java.util.Map" resultType="Long">
+        SELECT count(id) FROM `T_Ip_Info` where 1=1
+        <if test="id!=null"> and id=#{id} </if>
+        <if test="os!=null and os!=''"> and os=#{os} </if>
+        <if test="ip!=null and ip!=''"> and ip=#{ip} </if>
+        <if test="businessName!=null and businessName!=''"> and businessName=#{businessName} </if>
+        <if test="ipBusClassfy!=null and ipBusClassfy!=''"> and ipBusClassfy=#{ipBusClassfy} </if>
+        <if test="description!=null and description!=''"> and description=#{description} </if>
+
+    </select>
+
+    <update id="updateIpInfo" parameterType="java.util.Map">
+        update T_Ip_Info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="os!=null and os!=''">os=#{os},</if>
+            <if test="ip!=null and ip!=''">ip=#{ip},</if>
+            <if test="businessName!=null and businessName!=''">businessName=#{businessName},</if>
+            <if test="description!=null and description!=''">description=#{description},</if>
+            <if test="ipBusClassfy!=null and ipBusClassfy!=''">ipBusClassfy=#{ipBusClassfy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <insert id="addIpInfo" parameterType="java.util.Map" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into T_Ip_Info(
+        <trim prefix="" suffixOverrides=",">
+            <if test="os!=null and os!=''">os,</if>
+            <if test="ip!=null and ip!=''">ip,</if>
+            <if test="businessName!=null and businessName!=''">businessName,</if>
+            <if test="description!=null and description!=''">description,</if>
+            <if test="ipBusClassfy!=null and ipBusClassfy!=''">ipBusClassfy,</if>
+        </trim>
+        )values(
+        <trim prefix="" suffixOverrides=",">
+            <if test="os!=null and os!=''">#{os},</if>
+            <if test="ip!=null and ip!=''">#{ip},</if>
+            <if test="businessName!=null and businessName!=''">#{businessName},</if>
+            <if test="description!=null and description!=''">#{description},</if>
+            <if test="ipBusClassfy!=null and ipBusClassfy!=''">#{ipBusClassfy},</if>
+        </trim>
+        )
+    </insert>
+
+    <delete id="deleteIpInfo" parameterType="java.util.Map">
+        delete from T_Ip_Info
+        where id = #{id}
+    </delete>
+
+</mapper>
